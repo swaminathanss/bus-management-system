@@ -19,3 +19,15 @@ exports.getAllRoutes = async (req, res) => {
         });
     }
 };
+exports.updateRoute = async (req, res) => {
+    try {
+        const route = await Route.findByIdAndUpdate(req.params.id, req.body, {
+            new: true
+        });
+        res.json(route);
+    } catch (err) {
+        res.status(500).json({
+            message: err.message
+        });
+    }
+};

@@ -4,6 +4,7 @@ const Location = require('../models/Location');
 const LocationChangeRequest = require('../models/LocationChangeRequest');
 const Bus = require('../models/Bus');
 const Allocation = require('../models/Allocation');
+const sendEmail = require('../utils/sendEmail');
 
 const runAllocation = async () => {
   const today = new Date().toISOString().split('T')[0];
@@ -69,6 +70,14 @@ const runAllocation = async () => {
         busId: buses[busIndex]._id,
         seatNumber
       });
+      const user = userMap[student.studentId.toString()];
+      if (user && user.email) {
+        sendEmail(
+          user.email,
+          'Your bus allocation for today',
+          `Hi ${user.name}, you have been allocated Bus ${buses[busIndex].busNumber}, Seat ${seatNumber}, Parking Slot ${buses[busIndex].parkingSlotNumber}.`
+        );
+      }
       seatNumber++;
     }
   }

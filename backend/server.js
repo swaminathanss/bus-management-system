@@ -11,6 +11,7 @@ app.use(cors());
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/attendance', require('./routes/attendanceRoutes'));
 app.use('/api/routes', require('./routes/routeRoutes'));
+app.use('/api/locations', require('./routes/locationRoutes'));
 app.use('/api/buses', require('./routes/busRoutes'));
 app.use('/api/allocation', require('./routes/allocationRoutes'));
 app.use('/api/tickets', require('./routes/ticketRoutes'));
