@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 
 const AdminDashboard = () => {
@@ -20,6 +21,7 @@ const AdminDashboard = () => {
         <div className="page__eyebrow">Overview</div>
         <h1 className="page__title">Transport control</h1>
         <p style={{ color: 'var(--color-ink-soft)' }}>Bus management, allocation, and ticket queue coming in the next steps.</p>
+        <Link to="/admin/buses" className="btn btn--primary" style={{ display: 'inline-block', marginTop: 16, textDecoration: 'none' }}>Manage Buses</Link>
       </div>
     </div>
   );

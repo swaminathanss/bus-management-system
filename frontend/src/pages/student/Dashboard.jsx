@@ -1,15 +1,18 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import axiosInstance from '../../api/axiosInstance';
+import CampusMap from '../../components/CampusMap';
 
 const StudentDashboard = () => {
   const { name, logout } = useContext(AuthContext);
   const [attendance, setAttendance] = useState(null);
   const [bus, setBus] = useState(null);
+  const [buses, setBuses] = useState([]);
 
   useEffect(() => {
     axiosInstance.get('/attendance/today').then((res) => setAttendance(res.data)).catch(() => {});
     axiosInstance.get('/allocation/my-bus').then((res) => setBus(res.data)).catch(() => {});
+    axiosInstance.get('/buses').then((res) => setBuses(res.data)).catch(() => {});
   }, []);
 
   const isPresent = attendance?.status === 'present';
@@ -82,6 +85,11 @@ const StudentDashboard = () => {
             </ol>
           </div>
         )}
+
+        <div className="stat-card" style={{ marginTop: 20 }}>
+          <div className="stat-card__label">Campus bus parking</div>
+          <CampusMap buses={buses} highlightSlot={hasBus ? bus.busId.parkingSlotNumber : null} />
+        </div>
       </div>
     </div>
   );
