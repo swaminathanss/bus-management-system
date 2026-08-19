@@ -113,7 +113,11 @@ exports.getTodayAllocation = async (req, res) => {
 exports.getMyBus = async (req, res) => {
   try {
     const today = new Date().toISOString().split('T')[0];
-    const allocation = await Allocation.findOne({ date: today, studentId: req.user.id }).populate('busId');
+    const allocation = await Allocation.findOne({ date: today, studentId: req.user.id })
+      .populate({
+        path: 'busId',
+        populate: { path: 'routeId', select: 'name stops' }
+      });
     if (!allocation) return res.json({ message: 'Not allocated yet' });
     res.json(allocation);
   } catch (err) {

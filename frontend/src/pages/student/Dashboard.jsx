@@ -71,6 +71,17 @@ const StudentDashboard = () => {
             <div className="ticket__value">Not allocated yet &mdash; mark attendance to be included in today's run.</div>
           </div>
         )}
+
+        {hasBus && bus.busId.routeId?.stops?.length > 0 && (
+          <div className="stat-card" style={{ marginTop: 20 }}>
+            <div className="stat-card__label">Route stops &mdash; {bus.busId.routeId.name}</div>
+            <ol style={{ margin: 0, paddingLeft: 18, fontFamily: 'var(--font-mono)', fontSize: 13 }}>
+              {bus.busId.routeId.stops.map((stop, i) => (
+                <li key={i} style={{ marginBottom: 6 }}>{stop}</li>
+              ))}
+            </ol>
+          </div>
+        )}
       </div>
     </div>
   );
