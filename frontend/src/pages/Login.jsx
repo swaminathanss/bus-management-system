@@ -1,46 +1,5 @@
-// import {
-//     useState,
-//     useContext
-// } from 'react';
-// import {
-//     useNavigate
-// } from 'react-router-dom';
-// import axiosInstance from '../api/axiosInstance';
-// import {
-//     AuthContext
-// } from '../context/AuthContext';
-// const Login = () => {
-//     const [registerNumber, setRegisterNumber] = useState('');
-//     const [password, setPassword] = useState('');
-//     const [error, setError] = useState('');
-//     const {
-//         login
-//     } = useContext(AuthContext);
-//     const navigate = useNavigate();
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         setError('');
-//         try {
-//             const res = await axiosInstance.post('/auth/login', {
-//                 registerNumber,
-//                 password
-//             });
-//             login(res.data);
-//             if (res.data.role === 'admin') {
-//                 navigate('/admin/dashboard');
-//             } else {
-//                 navigate('/student/dashboard');
-//             }
-//         } catch (err) {
-//             setError(err.response?.data?.message || 'Login failed');
-//         }
-//     };
-//     return (<div style={{ maxWidth: 400, margin: '80px auto', fontFamily: 'sans-serif' }}> <h2>College Bus Login</h2> <form onSubmit={handleSubmit}> <div style={{ marginBottom: 12 }}> <label>Register Number</label> <br /> <input type="text" value={registerNumber} onChange={(e) => setRegisterNumber(e.target.value)} style={{ width: '100%', padding: 8 }} required /> </div> <div style={{ marginBottom: 12 }}> <label>Password</label> <br /> <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ width: '100%', padding: 8 }} required /> </div> {error && <p style={{ color: 'red' }}>{error}</p>} <button type="submit" style={{ width: '100%', padding: 10 }}>Login</button> </form> </div>);
-// };
-// export default Login;
-
 import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance';
 import { AuthContext } from '../context/AuthContext';
 
@@ -77,7 +36,9 @@ const Login = () => {
       <div className="auth__panel">
         <form className="auth__card" onSubmit={handleSubmit}>
           <h2 style={{ fontSize: 24, marginBottom: 4 }}>Sign in</h2>
-          <p style={{ color: 'var(--color-ink-soft)', fontSize: 14, marginBottom: 28 }}>Use your register number to continue.</p>
+          <p style={{ color: 'var(--color-ink-soft)', fontSize: 14, marginBottom: 28 }}>
+            New here? <Link to="/register" style={{ color: 'var(--color-ink)' }}>Create an account</Link>
+          </p>
           <div className="field">
             <label>Register Number</label>
             <input type="text" value={registerNumber} onChange={(e) => setRegisterNumber(e.target.value)} required />
