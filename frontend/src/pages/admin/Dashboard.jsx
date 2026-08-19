@@ -22,6 +22,7 @@ const AdminDashboard = () => {
         <h1 className="page__title">Transport control</h1>
         <p style={{ color: 'var(--color-ink-soft)' }}>Bus management, allocation, and ticket queue coming in the next steps.</p>
         <Link to="/admin/buses" className="btn btn--primary" style={{ display: 'inline-block', marginTop: 16, textDecoration: 'none' }}>Manage Buses</Link>
+        <Link to="/admin/fleet" className="btn btn--ghost" style={{ display: 'inline-block', marginTop: 16, marginLeft: 10, textDecoration: 'none' }}>Fleet Overview</Link>
       </div>
     </div>
   );
