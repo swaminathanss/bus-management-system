@@ -16,7 +16,13 @@ const Login = () => {
     try {
       const res = await axiosInstance.post('/auth/login', { registerNumber, password });
       login(res.data);
-      navigate(res.data.role === 'admin' ? '/admin/dashboard' : '/student/dashboard');
+      if (res.data.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else if (res.data.role === 'teacher') {
+        navigate('/teacher/dashboard');
+      } else {
+        navigate('/student/dashboard');
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }

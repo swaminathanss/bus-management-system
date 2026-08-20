@@ -4,13 +4,16 @@ import axiosInstance from '../api/axiosInstance';
 
 const Register = () => {
   const [locations, setLocations] = useState([]);
+  const [classSections, setClassSections] = useState([]);
   const [form, setForm] = useState({
     registerNumber: '',
     password: '',
+    confirmPassword: '',
     name: '',
     mobileNumber: '',
     email: '',
-    defaultLocation: ''
+    defaultLocation: '',
+    classSectionId: ''
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -18,6 +21,7 @@ const Register = () => {
 
   useEffect(() => {
     axiosInstance.get('/locations').then((res) => setLocations(res.data)).catch(() => {});
+    axiosInstance.get('/class-sections').then((res) => setClassSections(res.data)).catch(() => {});
   }, []);
 
   const handleChange = (e) => {
@@ -27,8 +31,15 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    if (form.password !== form.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
     try {
-      await axiosInstance.post('/auth/register', { ...form, role: 'student' });
+      const { confirmPassword, ...payload } = form;
+      await axiosInstance.post('/auth/register', { ...payload, role: 'student' });
       setSuccess(true);
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
@@ -71,6 +82,21 @@ const Register = () => {
             <input name="mobileNumber" value={form.mobileNumber} onChange={handleChange} required />
           </div>
           <div className="field">
+            <label>Class</label>
+            <select
+              name="classSectionId"
+              value={form.classSectionId}
+              onChange={handleChange}
+              required
+              style={{ width: '100%', padding: 12, borderRadius: 10, border: '1px solid var(--color-line)', fontFamily: 'var(--font-body)', fontSize: 15 }}
+            >
+              <option value="">Select your class</option>
+              {classSections.map((c) => (
+                <option key={c._id} value={c._id}>{c.name}</option>
+              ))}
+            </select>
+          </div>
+          <div className="field">
             <label>Drop-off Location</label>
             <select
               name="defaultLocation"
@@ -88,6 +114,10 @@ const Register = () => {
           <div className="field">
             <label>Password</label>
             <input type="password" name="password" value={form.password} onChange={handleChange} required />
+          </div>
+          <div className="field">
+            <label>Confirm Password</label>
+            <input type="password" name="confirmPassword" value={form.confirmPassword} onChange={handleChange} required />
           </div>
 
           {error && <p className="form-error">{error}</p>}

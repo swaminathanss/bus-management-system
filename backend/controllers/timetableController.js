@@ -22,6 +22,21 @@ exports.getAllTimetableEntries = async (req, res) => {
         });
     }
 };
+exports.getMyTimetable = async (req, res) => {
+    try {
+        const entries = await Timetable.find({
+            teacherId: req.user.id
+        }).populate('subjectId', 'name code').populate('classSectionId', 'name').sort({
+            dayOfWeek: 1,
+            periodNumber: 1
+        });
+        res.json(entries);
+    } catch (err) {
+        res.status(500).json({
+            message: err.message
+        });
+    }
+};
 exports.getTimetableForClass = async (req, res) => {
     try {
         const entries = await Timetable.find({

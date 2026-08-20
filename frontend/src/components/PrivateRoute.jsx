@@ -9,7 +9,8 @@ import {
 } from '../context/AuthContext';
 const PrivateRoute = ({
     children,
-    adminOnly
+    adminOnly,
+    teacherOnly
 }) => {
     const {
         token,
@@ -17,6 +18,7 @@ const PrivateRoute = ({
     } = useContext(AuthContext);
     if (!token) return <Navigate to="/login" />;
     if (adminOnly && role !== 'admin') return <Navigate to="/login" />;
+    if (teacherOnly && role !== 'teacher') return <Navigate to="/login" />;
     return children;
 };
 export default PrivateRoute;

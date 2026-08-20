@@ -9,5 +9,5 @@ const {
     adminOnly
 } = require('../middleware/authMiddleware');
 router.post('/', protect, adminOnly, createClassSection);
-router.get('/', protect, getAllClassSections);
+router.get('/', getAllClassSections);
 module.exports = router;
