@@ -4,9 +4,9 @@ const User = require('../models/User');
 
 exports.register = async (req, res) => {
   try {
-    const { registerNumber, password, name, mobileNumber, email, defaultLocation, role } = req.body;
+    const { registerNumber, password, name, mobileNumber, email, defaultLocation, classSectionId, role } = req.body;
     const hashed = await bcrypt.hash(password, 10);
-    const user = await User.create({ registerNumber, password: hashed, name, mobileNumber, email, defaultLocation, role });
+    const user = await User.create({ registerNumber, password: hashed, name, mobileNumber, email, defaultLocation, classSectionId, role });
     res.status(201).json({ id: user._id, registerNumber: user.registerNumber });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -22,6 +22,15 @@ exports.login = async (req, res) => {
     }
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
     res.json({ token, role: user.role, name: user.name });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getTeachers = async (req, res) => {
+  try {
+    const teachers = await User.find({ role: 'teacher' }, 'name registerNumber email');
+    res.json(teachers);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

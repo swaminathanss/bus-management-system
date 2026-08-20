@@ -25,6 +25,7 @@ const AdminDashboard = () => {
         <Link to="/admin/fleet" className="btn btn--ghost" style={{ display: 'inline-block', marginTop: 16, marginLeft: 10, textDecoration: 'none' }}>Fleet Overview</Link>
         <Link to="/admin/drivers" className="btn btn--ghost" style={{ display: 'inline-block', marginTop: 16, marginLeft: 10, textDecoration: 'none' }}>Driver Attendance</Link>
         <Link to="/admin/locations" className="btn btn--ghost" style={{ display: 'inline-block', marginTop: 16, marginLeft: 10, textDecoration: 'none' }}>Routes & Locations</Link>
+        <Link to="/admin/academics" className="btn btn--ghost" style={{ display: 'inline-block', marginTop: 16, marginLeft: 10, textDecoration: 'none' }}>Academics & Timetable</Link>
       </div>
     </div>
   );
